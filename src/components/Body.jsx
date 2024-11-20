@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import RestaurentCard from "./RestaurentCard";
 import { API_url } from "../../src/utils/constants";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [ListofRestaurent, setListofRestaurent] = useState([]);
 
+  const [searchText, setSearchText] = useState(" ");
+
   const [searchedRestaurent, setSearchedRestaurent] = useState([]);
 
-  const [searchText, setSearchText] = useState(" ");
 
   useEffect(() => {
     fetchData();
@@ -62,22 +64,32 @@ const Body = () => {
           onClick={() => {
             console.log("button was clicked !!!");
 
-            const filteredList = ListofRestaurent.filter((restaurants) => {
-              return restaurants.info.avgRating > 4.3;
+            const filteredList = ListofRestaurent.filter((res) => {
+              return res.info.avgRating > 4.3;
             });
-            console.log(filteredList);
-            setListofRestaurent(filteredList);
+            
+            setSearchedRestaurent(filteredList);
           }}
         >
           Top Rated Restaurent !
         </button>
+        <button
+        className="filter-btn"
+        onClick={()=>{
+          setSearchedRestaurent(ListofRestaurent);
+        }}
+        >Reset</button>
+
+
       </div>
 
       <div className="res-container">
         {searchedRestaurent.map((res) => {
           return (
+            <Link to ={"restaurents/"+res.info.id}> 
             <RestaurentCard
               key={res.info.id}
+
               resNames={res.info.name}
               avgRating={res.info.avgRating}
               costForTwo={res.info.costForTwo}
@@ -86,6 +98,7 @@ const Body = () => {
               locality={res.info.locality}
               deliveryTime={res.info.sla.slaString}
             />
+            </Link>
           );
         })}
       </div>

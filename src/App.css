@@ -3,12 +3,16 @@
   justify-content: space-between;
   padding: 12px;
   border: 1px solid black;
+  height:100px;
+  align-items: center;
 }
+
 
 .logo {
   width: 130px;
   padding: 10px;
   border: 1px solid black;
+  height:80px;
 }
 
 .nav-items > ul {
@@ -39,6 +43,8 @@ h2 {
 
 .res-card {
   width: 250px;
+  
+
 
   padding: 0px 0px;
   background-color: #f0f0f0;
