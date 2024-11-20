@@ -1,21 +1,13 @@
 import { useEffect, useState } from "react";
 import { MENU_url } from "../utils/constants";
 import { useParams } from "react-router-dom";
+import useRestaurentMenu from "../utils/useRestaurentMenu";
+
 
 const RestaurentMenu = () => {
+  const {resId} = useParams();
   
-  const [resinfo, setResInfo] = useState(null);
-  const { resId } = useParams();
-
-  useEffect(() => {
-    fetchMenu();
-  }, []);
-
-  const fetchMenu = async () => {
-    const data = await fetch(MENU_url + resId);
-    const json = await data.json();
-    setResInfo(json.data);
-  };
+  const resinfo = useRestaurentMenu(resId);
 
   if (resinfo === null) return <h2>Please wait...</h2>;
 
@@ -24,8 +16,6 @@ const RestaurentMenu = () => {
 
   const { itemCards } =
     resinfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
-
-
 
   return (
     <div>
