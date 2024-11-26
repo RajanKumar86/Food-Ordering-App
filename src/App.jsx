@@ -2,11 +2,15 @@ import "./App.css";
 import Header from "./components/Header";
 import Body from "./components/Body";
 
-import { Outlet, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import About from "./components/About";
 import ContactUS from "./components/ContactUS";
 import Error from "./components/Error";
 import RestaurentMenu from "./components/RestaurentMenu";
+
+import { lazy, Suspense } from "react";
+
+const Grocery = lazy(() => import("./components/Grocery"));
 
 const Applayout = () => {
   return (
@@ -20,18 +24,28 @@ const Applayout = () => {
 const App = () => {
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<Applayout />}>
-          <Route index element={<Body />} />
-          <Route path="about" element={<About />} />
-          <Route path="Contact" element={<ContactUS />} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Applayout />}>
+            <Route index element={<Body />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/Contact" element={<ContactUS />} />
 
-          <Route path="*" element={<Error />} />
-          <Route path="/restaurents/:resId" element={< RestaurentMenu/>} />
+            <Route
+              path="/grocery"
+              element={
+                <Suspense fallback={<h1>please wait a while !!</h1>}>
+                  {" "}
+                  <Grocery />{" "}
+                </Suspense>
+              }
+            />
 
-
-        </Route>
-      </Routes>
+            <Route path="*" element={<Error />} />
+            <Route path="/restaurents/:resId" element={<RestaurentMenu />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };

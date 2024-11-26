@@ -1,4 +1,4 @@
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
   padding: 12px;
@@ -33,7 +33,7 @@ h2 {
   color: rgb(183, 5, 5);
 }
 
-/* Restaurant cards CSS */
+
 
 .res-container {
   display: flex;
@@ -102,4 +102,4 @@ h2 {
   width: 250px;
   height: 400px;
   background-color: #f0f0f0;
-}
+} */
