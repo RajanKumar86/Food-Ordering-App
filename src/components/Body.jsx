@@ -4,12 +4,29 @@ import { API_url } from "../../src/utils/constants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import useBody from "../utils/useBody";
 
 const Body = () => {
   const [searchText, setSearchText] = useState(" ");
 
-  const [ListofRestaurent, searchedRestaurent] = useBody();
+  const [ListofRestaurent, setListofRestaurent] = useState([]);
+
+  const [searchedRestaurent, setSearchedRestaurent] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const res = await fetch(API_url);
+    const json = await res.json();
+
+    setListofRestaurent(
+      json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
+    );
+    setSearchedRestaurent(
+      json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
+    );
+  };
 
   const onlineStatus = useOnlineStatus();
 
@@ -79,7 +96,7 @@ const Body = () => {
       <div className="res-container flex flex-wrap">
         {searchedRestaurent.map((res) => {
           return (
-            <Link to={"restaurents/" + res.info.id}>
+            <Link to={"restaurents/" + res.info.id} key={res.info.id}>
               <RestaurentCard
                 key={res.info.id}
                 resNames={res.info.name}

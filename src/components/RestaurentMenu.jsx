@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
-import { MENU_url } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import useRestaurentMenu from "../utils/useRestaurentMenu";
 
-
 const RestaurentMenu = () => {
-  const {resId} = useParams();
-  
+  const { resId } = useParams();
+
   const resinfo = useRestaurentMenu(resId);
 
   if (resinfo === null) return <h2>Please wait...</h2>;
